@@ -89,13 +89,7 @@ export default class AILearning {
         this.#modelId = model || id;
         this.#recordTime = recordTime;
         this.result = result;
-
-        if (!tableData && classes.length) {
-            this.#tableData = createDataTable(classes);
-        } else {
-            this.#tableData = tableData;
-        }
-        
+    
         if (this.#playground) {
             this.#playground.reloadPlayground()
         }
@@ -108,6 +102,7 @@ export default class AILearning {
                 recordTime
             });
         } else if(type === 'number'){
+            this.#tableData = tableData || createDataTable(classes);
             this.#module = new NumberClassification({ 
                 name,
                 result,
@@ -117,6 +112,7 @@ export default class AILearning {
             });
             this.#labels = this.#module.getLabels();
         } else if (type === 'cluster') {
+            this.#tableData = tableData || createDataTable(classes);
             this.#module = new Cluster({ 
                 name,
                 result, 
@@ -124,6 +120,7 @@ export default class AILearning {
                 table: this.#tableData,
             });
         } else if (type === 'regression') {
+            this.#tableData = tableData || createDataTable(classes);
             this.#module = new Regression({ 
                 name,
                 result,
@@ -274,6 +271,9 @@ function getBlockMenu(playground) {
 }
 
 function createDataTable(classes) {
+    if(!classes.length) {
+        return ;
+    }
     try {
         const [{samples}] = classes;
         const [{data}] = samples;
