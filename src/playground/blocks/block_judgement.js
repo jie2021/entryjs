@@ -13,7 +13,7 @@ module.exports = {
                     {
                         type: 'Text',
                         text: Lang.Blocks.JUDGEMENT_is_clicked,
-                        color: '#FFF',
+                        color: '#FF0',
                     },
                 ],
                 events: {},
